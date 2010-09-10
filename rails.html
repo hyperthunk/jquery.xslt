@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>JSpec - JavaScript Testing Framework</title>
+    <link href='style.css' rel='stylesheet' />
+    <link href='lightr.css' rel='stylesheet' />
+    <script src='javascripts/jquery.js'></script>
+    <script src='javascripts/app.js'></script>
+  </head>
+  <body>
+    <a href='http://github.com/visionmedia/jspec'>
+      <img alt='Fork me on GitHub' id='ribbon' src='http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png' />
+    </a>
+  </body>
+  <div id='container'>
+    <div id='download'>
+      <a href='http://github.com/visionmedia/jspec/downloads'>
+        <img src='http://github.com/images/modules/download/zip.png' />
+      </a>
+      <a href='http://github.com/visionmedia/jspec/downloads'>
+        <img src='http://github.com/images/modules/download/tar.png' />
+      </a>
+    </div>
+    <h1>JSpec <em>Rails Integration</em></h1>
+    <p>
+      No additional gems are required for JSpec to integrate with Ruby on Rails. Simply initialize
+      a project using the command below at the root of your Rails project:
+    </p>
+    <pre>$ jspec init --rails</pre>
+    <p>
+      JSpec will create a 'jspec' directory, and ... your done! The rest of JSpec's functionality
+      is exactly the same, get started by binding JSpec using the command below and edit
+      'public/javascripts/application.js' (or any other JS) and JSpec will run your specifications.
+    </p>
+    <pre>$ jspec</pre>
+    <p>
+      Alternatively just as you may with regular JSpec projects, run your specs using Rhino:
+    </p>
+    <pre>jspec run --rhino</pre>
+    <p>
+      Or bind with Rhino
+    </p>
+    <pre>jspec --rhino</pre>
+    <div class='footer'>
+      this mini site brought to you by :
+      <a href='http://github.com/visionmedia/mini'>visionmedia/mini</a>
+    </div>
+  </div>
+</html>

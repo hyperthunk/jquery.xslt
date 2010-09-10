@@ -1,0 +1,63 @@
+!!!
+%html
+  %head
+    %title JSpec - JavaScript Testing Framework
+    %link{ :rel => 'stylesheet', :href => 'style.css' }
+  %body
+    %a{ :href => 'http://github.com/visionmedia/jspec' }
+      %img#ribbon{ :src => 'http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png', :alt => 'Fork me on GitHub' }
+
+  #container
+    #download
+      %a{ :href => 'http://github.com/visionmedia/jspec/zipball/master' }
+        %img{ :src => 'http://github.com/images/modules/download/zip.png' }
+      %a{ :href => 'http://github.com/visionmedia/jspec/tarball/master' }
+        %img{ :src => 'http://github.com/images/modules/download/tar.png' }
+    %h1
+      JSpec
+      %em javascript bdd framework
+
+    %p
+      JSpec is a extremely small, yet very powerful testing framework. Utilizing its own custom grammar and
+      pre-processor, JSpec can operate in ways that no other JavaScript testing framework can. This includes
+      many helpful shorthand literals, a very intuitive / readable syntax, as well as not polluting core
+      object prototypes.
+
+    %h2 Features
+  
+    %ul
+      %li Sexiest syntax of them all
+      %li Does not pollute core object prototypes
+      %li Async support (jQuery only at the moment)
+      %li Evalute any number of suites (or cherry pick specific suites loaded)
+      %li Evaluation contexts for providing helper methods and properties
+      %li Allows parens to be optional when using matchers ('foobar'.should_include 'foo')
+      %li Extremely simple matcher declaration
+      %li Several helpful formatters (dom, console, terminal, ...)
+      %li Custom formatters
+      %li Profiling
+      %li Tiny (10 kb compressed, 800-ish LOC)
+      
+    %h2 Example
+
+    %code= File.read('examples/basic')
+
+    %h2 Misc
+ 
+    %ul
+      %li
+        Get the
+        %a{ :href => 'http://github.com/visionmedia/jspec.tmbundle/tree/master' } TextMate bundle
+
+      %li 
+        View the
+        %a{ :href => 'http://github.com/visionmedia/jspec' } Readme
+        for more documentation
+
+    %h2 Authors
+      
+    %p TJ Holowaychuk (tj@vision-media.ca)
+
+    .footer
+      get the source on GitHub : 
+      %a{ :href => 'http://github.com/visionmedia/jspec' } visionmedia/jspec
