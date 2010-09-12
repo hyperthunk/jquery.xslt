@@ -17,26 +17,26 @@
                 throw errorThrown;
             },
             fetchUrl: function(url, callback) {
-                $.ajax({
+                jQuery.ajax({
                     url: url,
                     async: false,
                     type: 'GET',
                     contentType: 'application/xml',
-                    xhr: $.xslt.xhr,
-                    error: $.xslt.errorHandler,
+                    xhr: jQuery.xslt.xhr,
+                    error: jQuery.xslt.errorHandler,
                     success: callback
                 });  
             },
             xhr: function() {
                 // TODO: use object detection instead of browser detection!?
-                if ($.browser.msie && $.browser.version.substr(0, 1) <= 7)
+                if (jQuery.browser.msie && jQuery.browser.version.substr(0, 1) <= 7)
                     return new ActiveXObject("Microsoft.XMLHTTP");
                 else
                     return new XMLHttpRequest();
             },
             transform: function(options) {
-                var proc = $.xslt.loadTransform(options);
-                var xml = $.xslt.loadXML(options);
+                var proc = jQuery.xslt.loadTransform(options);
+                var xml = jQuery.xslt.loadXML(options);
                 //if (options.parameters) {
                 //    $(options.parameters).each(function(p) {
                 //        proc.setParameter(null, "title", paramValue);      
@@ -44,86 +44,98 @@
                 //}
                 var result = proc.transformToDocument(xml);
                 //proc.clearParameters();
-                return parseResult(result, options); 
+                return jQuery.xslt.parseResult(result, options); 
             },
             parseResult: function(result, options) {
                 if (options.resultFormat == 'DOM')
                     return result;
-                return $($.xslt.__serializer.serializeToString(result));  
+                return jQuery(jQuery.xslt.__serializer.serializeToString(result));  
             },
             loadXML: function(options) {
                 var src = options.source;
-                if (src) {
-                    return src;
-                } else {
-                    var xml = undefined;
-                    $.xslt.fetchUrl(options.sourceUrl,
+				var xml = undefined;
+                if (typeof src === 'string') {
+                    xml = src;
+                } else if (typeof src === 'undefined') {
+                    jQuery.xslt.fetchUrl(options.sourceUrl,
                         function(data, _textStatus, _xhr) {
                             xml = data;
                         });
-                    return xml;
+				} else {
+					return src;
                 }
+
+				// TODO: get content type from the reponse object 
+                return new DOMParser().parseFromString(xml, "text/xml");
             },
             loadTransform: function(options) {
                 var xsl = options.stylesheet;
+				var compiledXsl = undefined;
+				var compileXsl = function(data, _textStatus, _xhr) {
+					// TODO: get content type from the reponse object 
+					var doc = new DOMParser().parseFromString(data, "text/xml");  
+                    var proc = new XSLTProcessor();
+                    proc.importStylesheet(doc);
+                    compiledXsl = proc;
+                };
                 if (typeof xsl === 'undefined') {
-                    return $.xslt.cache[options.cacheKey];
-                } else {
-                    if (options.useCash || $.xslt.useCache) {
-                        var xfm = $.xslt.cache[xsl];
+                    // return $.xslt.cache[options.cacheKey];
+					xsl = options.stylesheetUrl;
+					if (options.useCash || jQuery.xslt.useCache) {
+                        var xfm = jQuery.xslt.cache[xsl];
                         if (xfm) {
                             return xfm;
                         }
                     }
-                    success = function(data, _textStatus, _xhr) {
-                        var proc = new XSLTProcessor();
-                        proc.importStylesheet(data);
-                        $.xslt.cache[xsl] = proc;
-                    };
-                    $.xslt.fetchUrl(xsl, success);
-                    return $.xslt.cache[xsl];
-                }
+                    
+					jQuery.xslt.fetchUrl(xsl, compileXsl);
+					if (options.useCash || jQuery.xslt.useCache) {
+						jQuery.xslt.cache[xsl] = compiledXsl;
+					}
+					
+                } else {
+					compileXsl(xsl);
+				}
+				
+				return compiledXsl;
             }
         }
     });
     
     $.fn.xslt = function() {
         if (arguments.length == 1) {
-            return $.xslt.transform.apply(this, arguments)
+            return jQuery.xslt.transform.apply(this, arguments)
         } else {
             if (arguments.length == 2) {
-                return $.xslt.transform({ stylesheet: arguments[0], source: [1] });
+                return jQuery.xslt.transform({ stylesheetUrl: arguments[0], sourceUrl: [1] });
             } else if (arguments.length == 3) {
-                return $.xslt.transform({
-                    transform: arguments[0],
-                    source: arguments[1],
+                return jQuery.xslt.transform({
+                    stylesheetUrl: arguments[0],
+                    sourceUrl: arguments[1],
                     parameters: arguments[2]
                 });
             } else {
-                throw "Bad Arguments: $.fn.xlst only takes between 1 and 3 parameters";
+                throw "Bad Arguments: jQuery.fn.xlst only takes between 1 and 3 parameters";
             }
         }
     };
     
     $.fn.transform = function() {
         if (arguments.length == 1) {
-            return this.replaceWith($.xslt.transform({
-                stylesheet: arguments[0],
-                source: this
-            }));
+            return this.html(jQuery.xslt.transform.apply(this, arguments));
         } else if (arguments.length == 2) {
-            return this.replaceWith($.xslt.transform({
-                stylesheet: arguments[0],
-                source: arguments[1]
+            return this.html(jQuery.xslt.transform({
+                stylesheetUrl: arguments[0],
+                sourceUrl: arguments[1]
             }));
         } else if (arguments.length == 3) {
-            return this.replaceWith($.xslt.transform({
-                stylesheet: arguments[0],
-                source: arguments[1],
-                parameters: arguments[3]
+            return this.html(jQuery.xslt.transform({
+                stylesheetUrl: arguments[0],
+                sourceUrl: arguments[1],
+                parameters: arguments[2]
             }));
         } else {
-            throw "Bad Arguments: $.fn.xlst only takes between 1 and 3 parameters";
+            throw "Bad Arguments: jQuery.fn.xlst only takes between 1 and 3 parameters";
         }
     };
 
