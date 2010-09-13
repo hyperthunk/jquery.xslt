@@ -104,7 +104,21 @@ describe("jquery.xslt", function() {
 
 	describe("transformations taking input parameters", function() {
 		
-		xit('should take the supplied input parameters and pass them on to the stylesheet', function() {});
+		it('should take the supplied input parameters and pass them on to the stylesheet', function() {
+			var xslt = jasmine.getFixtures().read('fixtures/params.xslt');
+			var emptyDomNode = '<node />';
+			var params = {};
+			params['param1'] = 'main';
+			params['param2'] = 'html-content'
+			var result = $.xslt.transform({
+				source: emptyDomNode,
+				stylesheet: xslt,
+				parameters: params,
+				tag: 'test-params'
+			});
+			
+			expect(result).toContain('div#main > p:contains(html-content)');
+		});
 		
 		xit('should clear input parameters between executions', function() {});
 		
