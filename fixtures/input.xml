@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<books>
+	<book name="The Algorithm Design Manual" author="Skiena" ></book>
+	<book name="Understanding the Linux Kernel" author="Bovet &amp; Cesati" ></book>
+	<book name="Database Systems" author="Date" ></book>
+</books>
