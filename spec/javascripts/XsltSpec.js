@@ -60,4 +60,12 @@ describe("jquery.xslt", function() {
 
   	});
 
+	describe("transformations taking input parameters", function() {
+		
+		xit('should take the supplied input parameters and pass them on to the stylesheet', function() {});
+		
+		xit('should clear input parameters between executions', function() {});
+		
+	});
+
 });
