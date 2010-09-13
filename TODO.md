@@ -2,7 +2,7 @@ TODO list
 =========
 
 - testing
-	- integrate jspec tests
+	- integrate jasmine/jspec tests
 - features
 	- more control over async/sync processing
 	- more control over async/sync ajax requests
