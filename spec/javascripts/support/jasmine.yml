@@ -11,7 +11,7 @@
 #   - dist/**/*.js
 #
 src_files:
-    - lib/**/*.js
+    - lib/jquery.xslt.js
     - public/javascripts/**/*.js
 
 # stylesheets
@@ -38,6 +38,9 @@ stylesheets:
 #   - helpers/**/*.js
 #
 helpers:
+    - helpers/jquery-1.4.2.js    
+    - helpers/jasmine-jquery.js
+    - helpers/SpecHelper.js
 
 # spec_files
 #
