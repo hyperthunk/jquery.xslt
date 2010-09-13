@@ -120,9 +120,49 @@ describe("jquery.xslt", function() {
 			expect(result).toContain('div#main > p:contains(html-content)');
 		});
 		
-		xit('should clear input parameters between executions', function() {});
+		it('should clear input parameters between executions', function() {
+			var xslt = jasmine.getFixtures().read('fixtures/params.xslt');
+			var emptyDomNode = '<node />';
+			var result = $.xslt.transform({
+				source: emptyDomNode,
+				stylesheet: xslt,
+				parameters: {
+					param1: 'param1',
+					param2: 'param2'
+				},
+				useCache: true
+			});
+			
+			expect(result).toContain('div#param1 > p:contains(param2)');
+			
+			var result2 = $.xslt.transform({
+				source: emptyDomNode,
+				stylesheet: xslt,
+				parameters: {
+					param1: 'foo1',
+					param2: 'foo2'
+				},
+				useCache: true
+			});
+			
+			expect(result2).toContain('div#foo1 > p:contains(foo2)');
+		});
 		
-		xit('should accept an exsl:node-set as a parameter', function() {});
+		xit('should accept an exsl:node-set as a parameter', function() {
+			var parser = new DOMParser();
+			var xmlString = "<node ref='foo/bar'>Node Value</node>";
+			var xmlParam = parser.parseFromString(xmlString, "text/xml");
+		
+			var xslt = jasmine.getFixtures().read('fixtures/node-set.xslt');
+			var emptyDomNode = '<node />';
+			var result = $.xslt.transform({
+				source: emptyDomNode,
+				stylesheet: xslt,
+				parameters: { nodes: xmlParam },
+			});
+			
+			expect(result).toContain("div > a[href*='foo/bar']");
+		});
 		
 	});
 
