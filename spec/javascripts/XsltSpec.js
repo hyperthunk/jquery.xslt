@@ -1,6 +1,6 @@
 describe("jquery.xslt", function() {
   
-	describe("transformations operating on URLs", function() {
+	xdescribe("transformations operating on URLs", function() {
 		
 		var input, xslt;		
 		var inputUrl = 'fixtures/input.xml';
@@ -104,8 +104,21 @@ describe("jquery.xslt", function() {
 	
 	// TODO: fixutre out how to make this work on platform that don't support it natively
 	describe("pre-processing stylesheets to deal with import/includes", function() {
-	
-		it('should do some crazy shit so that everything behaves the same way as firefox', function() {
+				
+		it('should manually perform includes to work around issues with gekko and webkit', function() {
+			var xslt = jasmine.getFixtures().read('fixtures/callout.xslt');
+			var emptyDomNode = '<node />';
+			var result = $.xslt.transform({
+				source: emptyDomNode,
+				stylesheet: xslt,
+				resultFormat: 'DOM'
+			});
+			
+			var xmlstr = new XMLSerializer().serializeToString(result);
+			expect(xmlstr).toEqual('<output><foo><bar/></foo></output>');
+		});		
+
+		it('should support performing multiple includes', function() {
 			var xslt = jasmine.getFixtures().read('fixtures/callout.xslt');
 			var emptyDomNode = '<node />';
 			var result = $.xslt.transform({
@@ -116,7 +129,7 @@ describe("jquery.xslt", function() {
 			
 			var xmlstr = new XMLSerializer().serializeToString(result);
 			expect(xmlstr).toEqual('<output><foo><bar/></foo><book worm="invisible"/></output>');
-		});
+		});		
 		
 	});
 

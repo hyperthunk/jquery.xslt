@@ -14,7 +14,6 @@
 		-->
 		<output>
 			<xsl:call-template name="foobar" />
-			<xsl:call-template name="bookworm" />
 		</output>
     </xsl:template>
 

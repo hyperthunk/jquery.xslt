@@ -17,8 +17,4 @@
 		</p>
     </xsl:template>
 
-	<xsl:template name="bookworm">
-		<book worm="invisible" />
-	</xsl:template>
-
 </xsl:transform>
