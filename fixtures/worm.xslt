@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
-<transform version="1.0" xmlns="http://www.w3.org/1999/XSL/Transform">
+<xsl:transform version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	
-	<template name="bookworm">
+    <xsl:template name="bookworm">
 		<book worm="invisible" />
-	</template>
-	
-</transform>
+    </xsl:template>
+
+</xsl:transform>

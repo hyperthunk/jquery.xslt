@@ -106,19 +106,7 @@ describe("jquery.xslt", function() {
 	describe("pre-processing stylesheets to deal with import/includes", function() {
 				
 		it('should manually perform includes to work around issues with gekko and webkit', function() {
-			var xslt = jasmine.getFixtures().read('fixtures/callout.xslt');
-			var emptyDomNode = '<node />';
-			var result = $.xslt.transform({
-				source: emptyDomNode,
-				stylesheet: xslt,
-				resultFormat: 'DOM'
-			});
-			
-			var xmlstr = new XMLSerializer().serializeToString(result);
-			expect(xmlstr).toEqual('<output><foo><bar/></foo></output>');
-		});		
 
-		it('should support performing multiple includes', function() {
 			var xslt = jasmine.getFixtures().read('fixtures/callout.xslt');
 			var emptyDomNode = '<node />';
 			var result = $.xslt.transform({
@@ -127,9 +115,10 @@ describe("jquery.xslt", function() {
 				resultFormat: 'DOM'
 			});
 			
-			var xmlstr = new XMLSerializer().serializeToString(result);
-			expect(xmlstr).toEqual('<output><foo><bar/></foo><book worm="invisible"/></output>');
-		});		
+			expect(result.selectNodes('output').length).toEqual(1);
+			expect(result.selectNodes('output/foo/bar').length).toEqual(1);
+			expect(result.selectNodes("output/book[@worm='invisible']").length).toEqual(1);
+		});	
 		
 	});
 
