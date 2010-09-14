@@ -1,9 +1,10 @@
 TODO list
 =========
 
-- testing
-	- integrate jasmine/jspec tests
-- features
-	- more control over async/sync processing
-	- more control over async/sync ajax requests
-	- use sarissa's transformToFragment(sourceDoc, ownerDoc) when doing a $.fn.replaceWith calls  
+- more control over async/sync processing
+	- option to queue up stuff (pipelines)
+- more control over async/sync ajax requests
+- use sarissa's transformToFragment(sourceDoc, ownerDoc) when doing a $.fn.replaceWith calls  
+- support for xsl:import outside of FF
+- support for document function outside of FF
+- support for exslt:node-set (via CCARE)
