@@ -45,10 +45,7 @@
       <p>
         Transforming local data....
       </p>
-      <pre>$.xslt.transform(xslt, xml);</pre>
-      <p>
-        Transforming server side data....
-      </p>
+      <pre>$.xslt.transform({stylesheet: xslt, source: xml});</pre>
       <p>
         Transforming jQuery wrapped data....
       </p>
@@ -58,7 +55,7 @@
       </p>
       <pre>
 $.xslt.transform({
-	stylesheet: '/assets/xsl/convert2svg.xslt', 
+	stylesheetUrl: '/assets/xsl/convert2svg.xslt', 
 	sourceUrl: '/resources/designs'
 });</pre>
       <p>
@@ -66,31 +63,11 @@ $.xslt.transform({
       </p>
       <pre>
 $.xslt.transform({
-	stylesheet: '/assets/xsl/convert2svg.xslt', 
+	stylesheetUrl: '/assets/xsl/convert2svg.xslt', 
 	sourceUrl: '/resources/designs',
 	useCash: true
 });
       </pre>
-	      <p>
-	        Re-using cached Transforms (explicit syntax)....
-	      </p>
-	      <pre>
-$.xslt.transform({
-	cacheKey: '/assets/xsl/convert2svg.xslt', // assumes already cached
-	sourceUrl: '/resources/designs',
-	useCash: true
-});
-	</pre>
-      <p>
-        Pipelining Transforms....
-      </p>
-      <pre>
-$.xslt.transform({
-	cacheKey: '/assets/xsl/convert2svg.xslt', // assumes already cached
-	sourceUrl: '/resources/designs',
-	useCash: true
-});
-	</pre>
 </div>
     <div id='more-information'>
       <h2>More Information</h2>
