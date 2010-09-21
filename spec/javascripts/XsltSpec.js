@@ -186,6 +186,23 @@ describe("jquery.xslt", function() {
 
 	});
 
+    describe("preprocessing stylesheets to replace calls to the document function", function() {
+
+        var xslt;
+
+		beforeEach(function() {
+			var xsl = 'fixtures/doc.xslt';
+			xslt = jasmine.getFixtures().read(xsl);
+		});
+
+        it('should resolve external documents correctly!', function() {
+			var result = $.xslt.transform({ source: '<ignored />', stylesheet: xslt });
+            // console.log(result);
+			expect(result).toContain('p > a:contains(Hello!)');
+	    });
+
+    });
+
 	describe("transformations taking input parameters", function() {
 
 		it('should take the supplied input parameters and pass them on to the stylesheet', function() {
