@@ -201,6 +201,15 @@ describe("jquery.xslt", function() {
 			expect(result).toContain('p > a:contains(Hello!)');
 	    });
 
+        it('should resolve external documents into variables correctly!', function() {
+            var xsl = jasmine.getFixtures().read('fixtures/exsldoc.xslt');
+			var result = $.xslt.transform({ source: '<ignored />', stylesheet: xsl });
+            // console.log(result);
+			expect(result).toContain('p:contains(The Algorithm Design Manual)');
+            expect(result).toContain("p:contains(Understanding the Linux Kernel)");
+			expect(result).toContain('p:contains(Database Systems)');
+	    });
+
     });
 
 	describe("transformations taking input parameters", function() {
