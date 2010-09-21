@@ -26,6 +26,20 @@ describe("jquery.xslt", function() {
 			});
 		});
 
+        it("should delegate to the custom resolver if one is specified", function() {
+            var result = $.xslt.transform({
+                source: input,
+                stylesheetUrl: xsltUrl,
+                urlResolver: function(url) {
+                    if (url == xsltUrl)
+                        return xslt;
+                    return undefined;
+                }
+            });
+            expect(result).toBeDefined();
+			expect(ajaxSpy.callCount).toEqual(0);
+        });
+
 		it("should fetch the input and xslt documents via $.ajax", function() {
 			var result = $.xslt.transform({
 				sourceUrl: inputUrl,
@@ -35,8 +49,7 @@ describe("jquery.xslt", function() {
 		});
 
 		it("should provide transparent caching of xslt results", function() {
-            console.log('cache test');
-			call = function() {
+            call = function() {
 				var result = $.xslt.transform({
 					source: input,
 					stylesheetUrl: xsltUrl,
