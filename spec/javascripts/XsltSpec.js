@@ -1,6 +1,6 @@
 describe("jquery.xslt", function() {
 
-	xdescribe("transformations operating on URLs", function() {
+	describe("transformations operating on URLs", function() {
 
 		var input, xslt;
 		var inputUrl = 'fixtures/input.xml';
@@ -18,7 +18,9 @@ describe("jquery.xslt", function() {
 			mock_ajax_requests[xml] = input;
 			mock_ajax_requests[xsl] = xslt;
 			ajaxSpy = spyOn($, 'ajax').andCallFake(function(options) {
+                // console.log('running fake ajax on ' + options.url);
 				var data = mock_ajax_requests[options.url];
+                // console.log('returning data ' + data);
 				options.success(data, 'ok', undefined);
 				return true;
 			});
@@ -33,6 +35,7 @@ describe("jquery.xslt", function() {
 		});
 
 		it("should provide transparent caching of xslt results", function() {
+            console.log('cache test');
 			call = function() {
 				var result = $.xslt.transform({
 					source: input,
@@ -120,18 +123,52 @@ describe("jquery.xslt", function() {
 			expect(result.selectNodes("output/book[@worm='invisible']").length).toEqual(1);
 		});
 
-        it('should silently ignore imports where the url is invalid', function() {
+        xit('should handle xsl:imports and work around issues with gekko and webkit where required', function() {
 
-            var xslt = jasmine.getFixtures().read('fixtures/invalid_imports.xslt');
+            var xslt = jasmine.getFixtures().read('fixtures/import.xslt');
             var emptyDomNode = '<node />';
+            console.log('output...');
+
             var result = $.xslt.transform({
                 source: emptyDomNode,
                 stylesheet: xslt,
                 resultFormat: 'DOM'
             });
 
-            // getting here means we didn't blow ourselves up!!!
-            expect(new XMLSerializer().serializeToString(result)).toEqual('');
+            console.log(result);
+            expect(result.selectNodes('output').length).toEqual(1);
+            expect(result.selectNodes('output/foo/bar').length).toEqual(1);
+            expect(result.selectNodes("output/book[@worm='invisible']").length).toEqual(1);
+        });
+
+        it('should puke for includes where the url is invalid', function() {
+
+            var xslt = jasmine.getFixtures().read('fixtures/invalid_includes.xslt');
+            var emptyDomNode = '<node />';
+            var bang = function() {
+                var result = $.xslt.transform({
+                    source: emptyDomNode,
+                    stylesheet: xslt,
+                    resultFormat: 'DOM'
+                });
+            };
+
+            expect(bang).toThrow();
+        });
+
+        it('should puke for imports where the url is invalid', function() {
+
+            var xslt = jasmine.getFixtures().read('fixtures/invalid_imports.xslt');
+            var emptyDomNode = '<node />';
+            var bang = function() {
+                var result = $.xslt.transform({
+                    source: emptyDomNode,
+                    stylesheet: xslt,
+                    resultFormat: 'DOM'
+                });
+            };
+
+            expect(bang).toThrow();
         });
 
 	});

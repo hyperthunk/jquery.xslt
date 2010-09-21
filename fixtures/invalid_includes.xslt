@@ -2,7 +2,7 @@
 <xsl:transform version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-	<xsl:import href="no/such/url/ignored.xslt" />
+	<xsl:include href="no/such/url/ignored.xslt" />
 
 	<xsl:output method='xml'
 				indent='yes'
