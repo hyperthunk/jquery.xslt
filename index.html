@@ -31,12 +31,20 @@
       <ul>
         <li>Simple, configurable caching of compiled stylesheets</li>
         <li>Customisable jQuery.ajax integration for pulling server side stylesheets and content</li>
+		<li>Automates workarounds so that <a href="http://www.w3schools.com/xsl/el_include.asp">xsl:include</a>, 
+			<a href="http://www.w3schools.com/Xsl/el_import.asp">xsl:import</a> and <a href="http://www.w3schools.com/Xsl/func_document.asp">the 
+			document function</a> work in browsers where support for these is inconsistent or just plain broken.</li>
+		<li>Support for custom URL resolvers</li>
+		<li>Return a string, DOM (Document) object or jQuery wrapped collection.</li>
       </ul>
 	  <h2 id='planned_features'>Planned Features</h2>
 	  <ul>
-		<li><a href="http://code.quirkey.com/sammy/">Sammy</a> plugin/integration</li>
-        <li>Control over async/sync execution of transforms and ajax calls</li>
+		<li><a href="http://code.quirkey.com/sammy/">Sammy</a> plugin/integration (xslt as a template engine)</li>
+        <li>Clean control over async/sync execution of transforms and ajax calls</li>
         <li>Specify DOM elements to populate with results e.g., $('#main').transform(xsl, xml);</li>
+        <li>Transformation pipelines</li>
+        <li>An in-browser <a href="">xproc</a> implementation.</li>
+        <li>Assert compatibility with specific features (e.g., $('#target').transform({require: 'xsl:import', stylesheet: xsl}))</li>
 	  </ul>
     </div>
     <div id='cheatsheets'>
@@ -68,6 +76,10 @@ $.xslt.transform({
 	useCash: true
 });
       </pre>
+      <p>
+        Getting the result as a DOM (Document) object....
+      </p>
+      <pre>$.xslt.transform({stylesheet: xslt, source: xml, resultFormat: 'DOM'});</pre>
 </div>
     <div id='more-information'>
       <h2>More Information</h2>
